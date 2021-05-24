@@ -130,11 +130,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     QObject::connect(slider, SIGNAL(sliderReleased()), this, SLOT(repopulate()));
 
-    QObject::connect(overcast, SIGNAL(stateChanged(int)), this, SLOT(filter_overcast()));
-    QObject::connect(foggy, SIGNAL(stateChanged(int)), this, SLOT(filter_foggy()));
-    QObject::connect(sunny, SIGNAL(stateChanged(int)), this, SLOT(filter_sunny()));
-    QObject::connect(rain, SIGNAL(stateChanged(int)), this, SLOT(filter_rain()));
-    QObject::connect(thunderstorm, SIGNAL(stateChanged(int)), this, SLOT(filter_thunderstorm()));
+    QObject::connect(overcast, SIGNAL(stateChanged(int)), this, SLOT(filter_checkbox()));
+    QObject::connect(foggy, SIGNAL(stateChanged(int)), this, SLOT(filter_checkbox()));
+    QObject::connect(sunny, SIGNAL(stateChanged(int)), this, SLOT(filter_checkbox()));
+    QObject::connect(rain, SIGNAL(stateChanged(int)), this, SLOT(filter_checkbox()));
+    QObject::connect(thunderstorm, SIGNAL(stateChanged(int)), this, SLOT(filter_checkbox()));
 
     QWidget* w = new QWidget();
     w->setLayout(gLay);
@@ -158,117 +158,40 @@ void MainWindow::repopulate()
     }
 }
 
-void MainWindow::filter_overcast()
+void MainWindow::filter_checkbox()
 {
-//    if(overcast->checkState() == Qt::Unchecked)
-//    {
-//        this->mylistwidget->clear();
-
-//        for(auto intrvl : i)
-//        {
-//            if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description != "overcast")
-//                mylistwidget->addItem(interval_toString(intrvl).c_str());
-//        }
-//    }
-//    else
-//    {
-//        for(auto intrvl : i)
-//        {
-//            if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description == "overcast")
-//                mylistwidget->addItem(interval_toString(intrvl).c_str());
-//        }
-//    }
-
+    this->mylistwidget->clear();
     for(auto checkbox : checkboxes)
     {
-
-    }
-}
-
-void MainWindow::filter_foggy()
-{
-    if(foggy->checkState() == Qt::Unchecked)
-    {
-        this->mylistwidget->clear();
-
-        for(auto intrvl : i)
-        {
-            if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description != "foggy")
-                mylistwidget->addItem(interval_toString(intrvl).c_str());
-        }
-    }
-    else
-    {
-        for(auto intrvl : i)
-        {
-            if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description == "foggy")
-                mylistwidget->addItem(interval_toString(intrvl).c_str());
-        }
-    }
-}
-
-void MainWindow::filter_sunny()
-{
-    if(sunny->checkState() == Qt::Unchecked)
-    {
-        this->mylistwidget->clear();
-
-        for(auto intrvl : i)
-        {
-            if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description != "sunny")
-                mylistwidget->addItem(interval_toString(intrvl).c_str());
-        }
-    }
-    else
-    {
-        for(auto intrvl : i)
-        {
-            if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description == "sunny")
-                mylistwidget->addItem(interval_toString(intrvl).c_str());
-        }
-    }
-}
-
-void MainWindow::filter_rain()
-{
-    if(rain->checkState() == Qt::Unchecked)
-    {
-        this->mylistwidget->clear();
-
-        for(auto intrvl : i)
-        {
-            if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description != "rain")
-                mylistwidget->addItem(interval_toString(intrvl).c_str());
-        }
-    }
-    else
-    {
-        for(auto intrvl : i)
-        {
-            if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description == "rain")
-                mylistwidget->addItem(interval_toString(intrvl).c_str());
-        }
-    }
-}
-
-void MainWindow::filter_thunderstorm()
-{
-    if(thunderstorm->checkState() == Qt::Unchecked)
-    {
-        this->mylistwidget->clear();
-
-        for(auto intrvl : i)
-        {
-            if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description != "thunderstorm")
-                mylistwidget->addItem(interval_toString(intrvl).c_str());
-        }
-    }
-    else
-    {
-        for(auto intrvl : i)
-        {
-            if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description == "thunderstorm")
-                mylistwidget->addItem(interval_toString(intrvl).c_str());
-        }
+        if(checkbox->checkState() == Qt::Checked && checkbox->text() == "overcast")
+            for(auto intrvl : i)
+                {
+                    if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description == "overcast")
+                        mylistwidget->addItem(interval_toString(intrvl).c_str());
+                }
+        else if(checkbox->checkState() == Qt::Checked && checkbox->text() == "foggy")
+            for(auto intrvl : i)
+                {
+                    if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description == "foggy")
+                        mylistwidget->addItem(interval_toString(intrvl).c_str());
+                }
+        else if(checkbox->checkState() == Qt::Checked && checkbox->text() == "sunny")
+            for(auto intrvl : i)
+                {
+                    if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description == "sunny")
+                        mylistwidget->addItem(interval_toString(intrvl).c_str());
+                }
+        else if(checkbox->checkState() == Qt::Checked && checkbox->text() == "rain")
+            for(auto intrvl : i)
+                {
+                    if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description == "rain")
+                        mylistwidget->addItem(interval_toString(intrvl).c_str());
+                }
+        else if(checkbox->checkState() == Qt::Checked && checkbox->text() == "thunderstorm")
+            for(auto intrvl : i)
+                {
+                    if(string_to_int(intrvl.precipitation) < this->slider->value() && intrvl.description == "thunderstorm")
+                        mylistwidget->addItem(interval_toString(intrvl).c_str());
+                }
     }
 }

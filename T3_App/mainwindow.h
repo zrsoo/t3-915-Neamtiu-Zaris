@@ -27,11 +27,7 @@ public:
 
 private slots:
     void repopulate();
-    void filter_overcast();
-    void filter_foggy();
-    void filter_sunny();
-    void filter_rain();
-    void filter_thunderstorm();
+    void filter_checkbox();
 
 private:
     Ui::MainWindow *ui;
