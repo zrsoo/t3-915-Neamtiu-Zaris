@@ -210,4 +210,12 @@ void MainWindow::reset_filters()
     sunny->setCheckState(Qt::CheckState::Checked);
     rain->setCheckState(Qt::CheckState::Checked);
     thunderstorm->setCheckState(Qt::CheckState::Checked);
+
+    this->mylistwidget->clear();
+
+    for(auto intrvl : i)
+    {
+        if(string_to_int(intrvl.precipitation) <= this->slider->value())
+            mylistwidget->addItem(interval_toString(intrvl).c_str());
+    }
 }
