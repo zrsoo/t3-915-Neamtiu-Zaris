@@ -9,6 +9,7 @@
 #include <QLabel>
 #include "Slider.h"
 #include <QCheckBox>
+#include <QPushButton>
 
 int string_to_int(std::string s)
 {
@@ -120,6 +121,9 @@ MainWindow::MainWindow(QWidget *parent)
     checkboxes.push_back(rain);
     checkboxes.push_back(thunderstorm);
 
+    QPushButton* btnReset = new QPushButton();
+    btnReset->setText("Reset all filters");
+
     gLay->addWidget(mylistwidget, 0, 0, 3, 3);
     gLay->addWidget(slider, 3, 0, 2, 2);
     gLay->addWidget(overcast, 5, 0, 1, 1);
@@ -127,6 +131,7 @@ MainWindow::MainWindow(QWidget *parent)
     gLay->addWidget(sunny, 7, 0, 1, 1);
     gLay->addWidget(rain, 8, 0, 1, 1);
     gLay->addWidget(thunderstorm, 9, 0, 1, 1);
+    gLay->addWidget(btnReset, 10, 0, 1, 1);
 
     QObject::connect(slider, SIGNAL(sliderReleased()), this, SLOT(repopulate()));
 
@@ -135,6 +140,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(sunny, SIGNAL(stateChanged(int)), this, SLOT(filter_checkbox()));
     QObject::connect(rain, SIGNAL(stateChanged(int)), this, SLOT(filter_checkbox()));
     QObject::connect(thunderstorm, SIGNAL(stateChanged(int)), this, SLOT(filter_checkbox()));
+    QObject::connect(btnReset, SIGNAL(clicked()), this, SLOT(reset_filters()));
 
     QWidget* w = new QWidget();
     w->setLayout(gLay);
@@ -194,4 +200,14 @@ void MainWindow::filter_checkbox()
                         mylistwidget->addItem(interval_toString(intrvl).c_str());
                 }
     }
+}
+
+void MainWindow::reset_filters()
+{
+    slider->setValue(100);
+    overcast->setCheckState(Qt::CheckState::Checked);
+    foggy->setCheckState(Qt::CheckState::Checked);
+    sunny->setCheckState(Qt::CheckState::Checked);
+    rain->setCheckState(Qt::CheckState::Checked);
+    thunderstorm->setCheckState(Qt::CheckState::Checked);
 }

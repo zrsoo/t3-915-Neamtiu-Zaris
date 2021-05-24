@@ -28,6 +28,7 @@ public:
 private slots:
     void repopulate();
     void filter_checkbox();
+    void reset_filters();
 
 private:
     Ui::MainWindow *ui;
